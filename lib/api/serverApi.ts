@@ -1,6 +1,8 @@
+
 import { api } from "./api";
 import type { User } from "@/types/user";
 import type { Note } from "@/types/note";
+import type { NotesResponse } from "./clientApi"; 
 
 export interface FetchNotesParams {
   page?: number;
@@ -14,8 +16,8 @@ export interface FetchNotesParams {
 export const fetchNotes = async (
   params: FetchNotesParams,
   cookies: string,
-): Promise<Note[]> => {
-  const res = await api.get<Note[]>("/notes", {
+): Promise<NotesResponse> => {
+  const res = await api.get<NotesResponse>("/notes", {
     params,
     headers: {
       Cookie: cookies,
@@ -49,5 +51,3 @@ export const getMe = async (cookies: string): Promise<User> => {
 
   return res.data;
 };
-
-/* ================= SESSION ================= */
