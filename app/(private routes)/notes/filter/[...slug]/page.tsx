@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 
@@ -51,6 +52,7 @@ export default async function Page({ params }: Props) {
   const { slug } = await params;
 
   const tag = slug?.[0];
+  const safeTag = tag ?? "all";
 
   const noteTag: NoteTag | undefined =
     tag && tag !== "all" ? (tag as NoteTag) : undefined;
@@ -60,7 +62,8 @@ export default async function Page({ params }: Props) {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["notes", 1, "", tag],
+
+    queryKey: ["notes", safeTag, 1, ""],
     queryFn: () =>
       fetchNotes(
         {
